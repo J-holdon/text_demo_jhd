@@ -1,6 +1,7 @@
 package ExcelAPI;
 
 
+import model.GoodsPrice;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.util.CellRangeAddress;
@@ -8,19 +9,36 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class downloadExcel {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         List<LinkedHashMap<String, Object>> linkedHashMaps = new ArrayList<LinkedHashMap<String, Object>>();
-        LinkedHashMap<String, Object> linkedHashMap = new LinkedHashMap<>();
-        linkedHashMap.put("sheet1", new Object());
-        linkedHashMaps.add(linkedHashMap);
+        for (int i = 0; i < 10; i++) {
+            LinkedHashMap<String, Object> linkedHashMap = new LinkedHashMap<>();
+            GoodsPrice goodsPrice = new GoodsPrice();
+            goodsPrice.setBidderName("测试投标人" + i);
+            goodsPrice.setCompanyName("测试招标人" + i);
+            goodsPrice.setGoodsName(UUID.randomUUID().toString());
+            goodsPrice.setGoodsCode("测试物资编码");
+            goodsPrice.setPrice(BigDecimal.valueOf(100 + i));
+            goodsPrice.setResponsePrice(BigDecimal.valueOf(i * i));
+            linkedHashMap.put("供应商名称", goodsPrice.getBidderName());
+            linkedHashMap.put("采购方名称", goodsPrice.getCompanyName());
+            linkedHashMap.put("物资名称", goodsPrice.getGoodsName());
+            linkedHashMap.put("物资编码", goodsPrice.getGoodsCode());
+            linkedHashMap.put("单价", goodsPrice.getPrice());
+            linkedHashMap.put("响应单价", goodsPrice.getResponsePrice());
+            linkedHashMaps.add(linkedHashMap);
+        }
         ExportExecl(linkedHashMaps, "测试excel");
+        addExcel(linkedHashMaps, "测试excel");
     }
 
     /**
