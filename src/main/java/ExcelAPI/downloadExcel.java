@@ -117,7 +117,7 @@ public class downloadExcel {
         cellStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框
         cellStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 居中
         // HSSFRow row=sheet.getRow(0);  //获取第一行
-        System.out.println("最后一行的行号 :"+sheet.getLastRowNum() + 1);  //分别得到最后一行的行号，和第3条记录的最后一个单元格
+        System.out.println("最后一行的行号 :"+(sheet.getLastRowNum() + 1));  //分别得到最后一行的行号，和第3条记录的最后一个单元格
 //        System.out.println("最后一个单元格 :"+row.getLastCellNum());  //分别得到最后一行的行号，和第3条记录的最后一个单元格
         // HSSFRow startRow=sheet.createRow((short)(sheet.getLastRowNum()+1)); // 追加开始行
         // -----------------追加数据-------------------
