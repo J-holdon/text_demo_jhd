@@ -2,6 +2,7 @@ package ExcelAPI;
 
 
 import model.GoodsPrice;
+import enums.TableType;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.util.CellRangeAddress;
@@ -58,6 +59,7 @@ public class downloadExcel {
         cellStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框
         cellStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框
         cellStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 居中
+        cellStyle.setWrapText(true);//自动换行
         // -----------------------------数据填充 ---------------------------------
         // 设置标题
         HSSFRow titleRow = sheet.createRow(0);
@@ -100,6 +102,36 @@ public class downloadExcel {
     }
 
     /**
+     * 改变表格样式
+     */
+    private HSSFCellStyle changeStyle(HSSFCellStyle cellStyle, TableType type){
+        switch (type){
+            case T_HEED:
+                //.....todo 表格不同部分的样式
+                break;
+            case NORMAL:
+                //.....todo 表格不同部分的样式
+                break;
+            case T_BODY:
+                //.....todo 表格不同部分的样式
+                cellStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框
+                cellStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框
+                cellStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框
+                cellStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框
+                cellStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 居中
+                cellStyle.setWrapText(true);//自动换行
+                break;
+            case T_FOOT:
+                //.....todo 表格不同部分的样式
+                break;
+            default:
+                break;
+        }
+        return cellStyle;
+    }
+
+
+    /**
      * 追加到已有excel
      * @param dataList 数据
      * @param name 文件名
@@ -116,6 +148,10 @@ public class downloadExcel {
         cellStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框
         cellStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框
         cellStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 居中
+        //合并单元格
+        //参数1：起始行 参数2：终止行 参数3：起始列 参数4：终止列
+        CellRangeAddress region1 = new CellRangeAddress(sheet.getLastRowNum() + dataList.size() + 1, sheet.getLastRowNum() + dataList.size() + 1, (short) 0, (short) 11);
+        sheet.addMergedRegion(region1);
         // HSSFRow row=sheet.getRow(0);  //获取第一行
         System.out.println("最后一行的行号 :"+sheet.getLastRowNum() + 1);  //分别得到最后一行的行号，和第3条记录的最后一个单元格
 //        System.out.println("最后一个单元格 :"+row.getLastCellNum());  //分别得到最后一行的行号，和第3条记录的最后一个单元格

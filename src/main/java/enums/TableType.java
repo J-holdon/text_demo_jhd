@@ -1,6 +1,5 @@
-package Enum;
+package enums;
 
 public enum TableType {
-    NOMAL;
-
+    T_HEED, T_BODY, NORMAL, T_FOOT;
 }
